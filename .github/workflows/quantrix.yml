@@ -1,0 +1,55 @@
+name: "🔮 QUANTRIX | QUANTUM CORE DEPLOYMENT"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-quantrix-node:
+    name: "⚛️ INITIALIZE ZYNTRAX PROTOCOL"
+    runs-on: windows-latest
+
+    steps:
+      # --- STEP 1: QUANTUM BOOT SEQUENCE ---
+      - name: 🌌 Quantum Pulse Engine Start
+        run: |
+          Write-Host " "
+          Write-Host "███████╗██╗   ██╗███╗   ██╗████████╗██████╗  █████╗ ██╗  ██╗" -ForegroundColor Cyan
+          Write-Host "╚══███╔╝╚██╗ ██╔╝████╗  ██║╚══██╔══╝██╔══██╗██╔══██╗╚██╗██╔╝" -ForegroundColor Cyan
+          Write-Host "  ███╔╝  ╚████╔╝ ██╔██╗ ██║   ██║   ██████╔╝███████║ ╚███╔╝ " -ForegroundColor Magenta
+          Write-Host " ███╔╝    ╚██╔╝  ██║╚██╗██║   ██║   ██╔══██╗██╔══██║ ██╔██╗ " -ForegroundColor Magenta
+          Write-Host "███████╗   ██║   ██║ ╚████║   ██║   ██║  ██║██║  ██║██╔╝ ██╗" -ForegroundColor Cyan
+          Write-Host "╚══════╝   ╚═╝   ╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝" -ForegroundColor Cyan
+          Write-Host " "
+          Write-Host "=======================================================" -ForegroundColor DarkGray
+          Write-Host "   ► SYSTEM    : QUANTRIX ENGINE" -ForegroundColor Yellow
+          Write-Host "   ► STATUS    : ONLINE" -ForegroundColor Green
+          Write-Host "   ► COMMANDER : ZYNTRAX YT" -ForegroundColor Magenta
+          Write-Host "=======================================================" -ForegroundColor DarkGray
+
+      # --- STEP 2: FETCH FROM DIMENSIONAL VAULT (GITLAB) ---
+      - name: 🧬 Establishing Neural Link (GitLab)
+        env:
+          GL_TOKEN: ${{ secrets.GL_TOKEN }}
+          GL_PROJECT_ID: ${{ secrets.GL_PROJECT_ID }}
+        run: |
+          Write-Host "📡 Downloading Core Logic from Matrix Vault..." -ForegroundColor Cyan
+          # URL mein Project ID aur Token use kar rahe hain
+          $CoreUrl = "https://gitlab.com/api/v4/projects/$env:GL_PROJECT_ID/repository/files/Quantrix-Core.ps1/raw?ref=main"
+          
+          try {
+            Invoke-WebRequest -Uri $CoreUrl -Headers @{ "PRIVATE-TOKEN" = "$env:GL_TOKEN" } -OutFile "Quantrix-Core.ps1"
+            Write-Host "✅ QUANTUM CORE RETRIEVED." -ForegroundColor Green
+          } catch {
+            Write-Host "❌ NEURAL LINK FAILED. CHECK SECRETS (GL_TOKEN / GL_PROJECT_ID)." -ForegroundColor Red
+            exit 1
+          }
+
+      # --- STEP 3: EXECUTE QUANTRIX ---
+      - name: 🚀 Engaging Infinity Chain Protocol
+        env:
+          NGROK_CHAND: ${{ secrets.NGROK_CHAND }}
+          GL_TOKEN: ${{ secrets.GL_TOKEN }}
+          GL_PROJECT_ID: ${{ secrets.GL_PROJECT_ID }}
+        run: |
+          Write-Host "⚡ QUANTUM PULSE TRIGGERED..." -ForegroundColor Yellow
+          powershell.exe -ExecutionPolicy Bypass -File ".\Quantrix-Core.ps1"
